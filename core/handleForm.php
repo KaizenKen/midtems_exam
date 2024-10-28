@@ -83,8 +83,30 @@
     if($query){
       header('location: ../users/editUser.php?userID='.$userId);
     } else {
-      echo 'Editing User Failed!';
+      echo 'Edit User Failed!';
       header('refresh:2; url=../users/viewUsers.php');
+    }
+  }
+
+  if(isset($_POST['deleteUser'])){
+    $userId = $_GET['userID'];
+  
+    $query = deleteUser($pdo, $userId);
+
+    if($query){
+      session_start();
+      $sessionID = $_SESSION['userid'];
+      if($sessionID == $userId){
+        session_unset();
+        session_destroy();
+
+        header('location: ../login.php');
+      } else {
+        header('location: ../users/viewUsers.php');
+
+      }
+    } else {
+      echo 'Delete User Failed!';
     }
   }
 ?>

@@ -12,7 +12,6 @@
     header('location: login.php');
   }
 
-
   $editingUser = getUserById($pdo, $_GET['userID']);
 ?>
 <!DOCTYPE html>

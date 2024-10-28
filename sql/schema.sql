@@ -66,8 +66,8 @@ insert into users(user_name, user_password, user_type)
 values('Kristel', '123', 'Customer');
 
 insert into users(user_name, user_password, user_type)
-values('Mei', '123', 'Customer');
+values('Mei', '123', 'Rider');
 insert into users(user_name, user_password, user_type)
-values('Jason', '123', 'Customer');
+values('Jason', '123', 'Rider');
 insert into users(user_name, user_password, user_type)
-values('Shadrach', '123', 'Customer');
+values('Shadrach', '123', 'Rider');
