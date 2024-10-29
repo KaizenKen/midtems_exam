@@ -9,7 +9,7 @@
     $sessionID = $_SESSION['userid'];
 
   } else {
-    header('location: login.php');
+    header('location: ../login.php');
   }
 
   $deletingUser = getUserById($pdo, $_GET['userID']);
@@ -24,9 +24,15 @@
 </head>
 <body>
   <?php
+    if($deletingUser == ''){
+      echo 'User does not exists!';
+      header('refresh:2; url=viewUsers.php');
+      exit;
+    }
+
     if($sessionType !== 'Admin'){
       if($sessionID !== $deletingUser['user_id']){
-        echo 'Access Forbidden!';
+        echo 'Access Denied!';
         header('refresh:2; url=viewUsers.php');
         exit;
       }

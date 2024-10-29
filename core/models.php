@@ -101,4 +101,93 @@
       return true;
     }
   }
+
+  function getAllOrders($pdo){
+    $sql = "SELECT * from orders";
+    $stmt = $pdo->prepare($sql);
+    $execute = $stmt->execute();
+
+    if($execute){
+      return $stmt->fetchAll();
+    }
+  }
+
+  function getOrdersByUserId($pdo, $id){
+    $sql = "SELECT * from orders WHERE customer_id = ?";
+    $stmt = $pdo->prepare($sql);
+    $execute = $stmt->execute([$id]);
+
+    if($execute){
+      return $stmt->fetchAll();
+    }
+  }
+
+  function getOrderById($pdo, $id){
+    $sql = "SELECT * from orders WHERE order_id = ?";
+    $stmt = $pdo->prepare($sql);
+    $execute = $stmt->execute([$id]);
+
+    if($execute){
+      return $stmt->fetch();
+    }
+  }
+
+  function getAllOrderedItems($pdo, $orderId, $customerId){
+    $sql = "SELECT * FROM orders WHERE order_id = ? AND customer_id = ?";
+    $stmt = $pdo->prepare($sql);
+    $execute = $stmt->execute([$orderId, $customerId]);
+
+    if($execute){
+      return $stmt->fetchAll();
+    }
+  }
+
+  function getItemById($pdo, $id){
+    $sql = "SELECT * FROM items WHERE item_id = ?";
+    $stmt = $pdo->prepare($sql);
+    $execute = $stmt->execute([$id]);
+
+    if($execute){
+      return $stmt->fetch();
+    }
+  }
+
+  function placeNewOrder($pdo, $userId, $itemId){
+    $sql = "INSERT INTO orders(customer_id, ordered_items) VALUES(?,?);";
+    $stmt = $pdo->prepare($sql);
+    $execute = $stmt->execute([$userId, $itemId]);
+
+    if($execute){
+      return true;
+    }
+  }
+
+  function deleteOrder($pdo, $id){
+    $sql = "DELETE FROM orders WHERE order_id = ?";
+    $stmt = $pdo->prepare($sql);
+    $execute = $stmt->execute([$id]);
+
+    if($execute){
+      return true;
+    }
+  }
+
+  function editOrder($pdo, $itemId, $orderId){
+    $sql = 'UPDATE orders SET ordered_items = ? WHERE order_id = ?';
+    $stmt = $pdo->prepare($sql);
+    $execute = $stmt->execute([$itemId, $orderId]);
+
+    if($execute){
+      session_start();
+      $sessionId = $_SESSION['userid'];
+
+      $sql = "UPDATE orders SET edited_by = ?, date_edited = current_timestamp WHERE order_id = ?";
+      $stmt = $pdo->prepare($sql);
+      $execute2 = $stmt->execute([$sessionId, $orderId]);
+
+      if($execute2){
+        return true;
+      }
+    }
+  }
 ?>

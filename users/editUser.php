@@ -9,7 +9,7 @@
     $sessionID = $_SESSION['userid'];
 
   } else {
-    header('location: login.php');
+    header('location: ../login.php');
   }
 
   $editingUser = getUserById($pdo, $_GET['userID']);
@@ -24,9 +24,15 @@
 </head>
 <body>
   <?php
+    if($editingUser == ''){
+      echo 'User does not exists!';
+      
+      exit;
+    }
+
     if($sessionType !== 'Admin'){
       if($sessionID !== $editingUser['user_id']){
-        echo 'Access Forbidden!';
+        echo 'Access Denied!';
         header('refresh:2; url=viewUsers.php');
         exit;
       }

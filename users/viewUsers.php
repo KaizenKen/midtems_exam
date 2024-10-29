@@ -9,7 +9,7 @@
     $sessionID = $_SESSION['userid'];
 
   } else {
-    header('location: login.php');
+    header('location: ../login.php');
   }
 ?>
 <!DOCTYPE html>

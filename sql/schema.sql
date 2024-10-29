@@ -16,9 +16,9 @@ create table restaurants(
   primary key (restaurant_id),
   restaurant_name varchar(255),
   restaurant_location varchar(255),
+  added_by int,
   date_added timestamp default current_timestamp,
   edited_by int,
-  foreign key (edited_by) references users(user_id),
   date_edited timestamp null
 );
 
@@ -26,12 +26,11 @@ create table items(
   item_id int auto_increment,
   primary key (item_id),
   restaurant_id int,
-  foreign key (restaurant_id) references restaurants(restaurant_id),
   item_name varchar(255) not null,
   item_price int not null,
+  added_by int,
   date_added timestamp default current_timestamp,
   edited_by int,
-  foreign key (edited_by) references users(user_id),
   date_edited timestamp null
 );
 
@@ -39,15 +38,11 @@ create table orders(
   order_id int auto_increment,
   primary key (order_id),
   customer_id int,
-  foreign key (customer_id) references users(user_id),
   rider_id int,
-  foreign key (rider_id) references users(user_id),
   ordered_items int,
-  foreign key (ordered_items) references items(item_id),
   delivery_status varchar(255),
   date_ordered timestamp default current_timestamp,
   edited_by int,
-  foreign key (edited_by) REFERENCES users(user_id),
   date_edited timestamp null
 );
 
@@ -71,3 +66,11 @@ insert into users(user_name, user_password, user_type)
 values('Jason', '123', 'Rider');
 insert into users(user_name, user_password, user_type)
 values('Shadrach', '123', 'Rider');
+
+insert into restaurants(restaurant_name, restaurant_location)
+values('Jollibee', '123');
+
+insert into items(item_name, item_price)
+values('1-pc Chicken Joy', 89);
+insert into items(item_name, item_price)
+values('Jolly Spaghetti', 60);

@@ -11,7 +11,6 @@
   } else {
     header('location: login.php');
   }
-  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +30,7 @@
     </tr>
     <tr>
       <td><a href="users/viewUsers.php">View Users</a></td>
-      <td><a href="">View Orders</a></td>
+      <td><a href="orders/viewOrders.php">View Orders</a></td>
       <td><a href="">View Restaurants</a></td>
     </tr>
   </table>

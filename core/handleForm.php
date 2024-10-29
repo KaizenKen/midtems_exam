@@ -109,4 +109,45 @@
       echo 'Delete User Failed!';
     }
   }
+
+  if(isset($_POST['placeOrder'])){
+    session_start();
+
+    $userId = $_SESSION['userid'];
+    $itemId = $_POST['itemid'];
+
+    $query = placeNewOrder($pdo, $userId, $itemId);
+    if($query){
+      header('location: ../orders/viewOrders.php');
+    } else {
+      echo 'Add New Order Failed!';
+      header('refresh:2; url=../orders/viewOrders.php');
+    }
+  }
+
+  if(isset($_POST['deleteOrder'])){
+    $id = $_GET['orderID'];
+    $query = deleteOrder($pdo, $id);
+
+    if($query){
+      header('location: ../orders/viewOrders.php');
+    } else {
+      echo 'Delete Order Failed!';
+      header('refresh:2; url=../orders/viewOrders.php');
+    }
+  }
+
+  if(isset($_POST['editOrder'])){
+    $itemId = $_POST['itemid'];
+    $orderId = $_GET['orderID'];
+
+    $query = editOrder($pdo, $itemId, $orderId);
+
+    if($query){
+      header('location: ../orders/editOrder.php?orderID='.$orderId);
+    } else {
+      echo 'Edit Order Failed!';
+      header('location: ../orders/editOrder.php?orderID='.$orderId);
+    }
+  }
 ?>
